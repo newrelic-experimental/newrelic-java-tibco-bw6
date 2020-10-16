@@ -1,0 +1,32 @@
+plugins {
+    id 'com.alexvasilkov.git-dependencies' version '2.0.1'
+}
+git {
+    fetch 'https://github.com/newrelic/newrelic-java-agent.git', {
+        dir "$rootDir/newrelic-agent/"
+        tag 'v6.0.0'
+    }
+}
+rootProject.name = 'java-instrumentation-template'
+include 'tibco_bw_axisservlet_6'
+include 'tibco_bw_core_6'
+include 'tibco_bw_goverance_6'
+include 'tibco_bw_job_6'
+include 'tibco_bw_pvm_6'
+include 'tibco_bw_sqldirect_6'
+include 'apache_httpcore'
+include 'tibco_bw_binding_6'
+include 'tibco_bw_coreapi_6'
+include 'tibco_bw_http_6'
+include 'tibco_bw_pvm_6.3'
+include 'apache_nhttp'
+include 'tibco_bw_bx_6'
+include 'tibco_bw_frwk_6'
+include 'tibco_bw_http_6.3'
+include 'tibco_bw_rest_6'
+include 'tibco_bw_axisengine_6'
+include 'tibco_bw_bxservice_6'
+include 'tibco_bw_ftl_6'
+include 'tibco_bw_jerseymodel_6'
+include 'tibco_bw_msgrec_6'
+include 'tibco_bw_soap_6'
