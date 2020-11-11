@@ -4,6 +4,7 @@
 apply plugin: 'java'
 
 dependencies {
+   implementation 'org.apache.axis2:axis2:1.6.2'
    implementation fileTree(include: ['*.jar'], dir: 'lib')
 
    // New Relic Java Agent dependencies

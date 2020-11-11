@@ -1,0 +1,8 @@
+Add these jars from your installation where xxxxx (e.g. 6.3.800.012) represents the version you are using   
+
+com.tibco.bw.core.runtime_xxxxx.jar
+com.tibco.bw.core.runtime.api_xxxxx.jar
+com.tibco.bw.runtime_xxxxx.jar
+com.tibco.pvm.core.api_xxxxx.jar
+com.tibco.pvm.core.infra_xxxxx.jar
+org.genxdm.api_1.1.0.jar

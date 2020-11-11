@@ -1,0 +1,7 @@
+Add these jars from your installation where xxxxx (e.g. 6.2.100.006) represents the version you are using   
+  
+com.tibco.bw.core.runtime.api_xxxxx.jar
+com.tibco.bw.frwk_xxxxx.jar
+com.tibco.bw.frwk.api_xxxxx.jar
+com.tibco.bw.frwk.engine_xxxxx.jar
+com.tibco.bw.frwk.engine.stats_xxxxx.jar

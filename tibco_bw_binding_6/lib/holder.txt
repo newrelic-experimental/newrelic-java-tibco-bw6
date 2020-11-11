@@ -1,0 +1,8 @@
+Add these jars from your installation where xxxxx (e.g. 6.2.100.006) represents the version you are using   
+  
+com.tibco.bw.binding.rest.jaxrs.runtime_xxxxx.jar
+com.tibco.bw.binding.rest.model_xxxxx.jar
+com.tibco.bw.binding.rest.runtime_xxxxx.jar
+com.tibco.bw.binding.rest.runtime.schema_xxxxx.jar
+com.tibco.bw.binding.rest.swagger.runtime_xxxxx.jar
+com.tibco.bw.core.runtime.api_xxxxx.jar

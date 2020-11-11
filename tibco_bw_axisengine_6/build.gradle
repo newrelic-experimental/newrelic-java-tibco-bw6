@@ -4,7 +4,10 @@
 apply plugin: 'java'
 
 dependencies {
-   implementation fileTree(include: ['*.jar'], dir: 'lib')
+   implementation 'org.apache.axis2:axis2:1.6.2'
+   implementation 'org.apache.geronimo.specs:geronimo-servlet_3.0_spec:1.0'
+   implementation 'org.apache.ws.commons.axiom:axiom-api:1.2.22'
+   
 
    // New Relic Java Agent dependencies
    implementation 'com.newrelic.agent.java:newrelic-agent:6.0.0'
