@@ -32,6 +32,7 @@ public abstract class NHttpServiceHandler {
 		HttpRequest request = nHttpServerConnection.getHttpRequest();
 		if(request != null) {
 			InboundWrapper wrapper = new InboundWrapper(request);
+			
 			AgentBridge.getAgent().getTransaction().provideHeaders(wrapper);
 		}
 		Weaver.callOriginal();
