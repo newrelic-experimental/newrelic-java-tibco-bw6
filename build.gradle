@@ -31,6 +31,13 @@ buildscript {
     mavenLocal()
     mavenCentral()
     gradlePluginPortal()
+    maven {
+      url 'http://www.genxdm.org/maven2/'
+      metadataSources {
+        mavenPom()
+        artifact()
+      }
+    }
   }
 
   dependencies {
