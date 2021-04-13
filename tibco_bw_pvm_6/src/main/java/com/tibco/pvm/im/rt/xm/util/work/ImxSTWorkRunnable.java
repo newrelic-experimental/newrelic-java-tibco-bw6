@@ -1,8 +1,5 @@
 package com.tibco.pvm.im.rt.xm.util.work;
 
-import java.util.logging.Level;
-
-import com.newrelic.api.agent.NewRelic;
 import com.newrelic.api.agent.Trace;
 import com.newrelic.api.agent.weaver.Weave;
 import com.newrelic.api.agent.weaver.Weaver;
@@ -24,7 +21,6 @@ public abstract class ImxSTWorkRunnable extends STWorkRunnable  {
 			m_work.token.linkAndExpire();
 			m_work.token = null;
 		}
-		NewRelic.getAgent().getLogger().log(Level.INFO, "Enter {0}.doWorkBlock", getClass().getName());
 		boolean b = Weaver.callOriginal();
 		return b;
 	}
