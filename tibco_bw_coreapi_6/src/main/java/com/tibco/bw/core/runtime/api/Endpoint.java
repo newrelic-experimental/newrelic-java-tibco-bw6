@@ -19,7 +19,10 @@ public abstract class Endpoint {
 
 	@Trace(dispatcher=true)
 	public <N> void invoke(MessageContext msgCtx, N[] paramArrayOfN) {
+		Exception e1 = new Exception("Call to invoke endpoint");
+		
 		Logger logger = NewRelic.getAgent().getLogger();
+		logger.log(Level.FINE, e1, "Call to {0}.invoke", getClass().getName());
 		RequestContext requestCtx = msgCtx.getRequestContext();
 		String endpointName = "Unknown";
 		try {

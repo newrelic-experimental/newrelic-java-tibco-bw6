@@ -1,5 +1,7 @@
 package com.tibco.pvm.infra.api.util.director;
         
+import java.util.logging.Level;
+
 import com.newrelic.api.agent.NewRelic;
 import com.newrelic.api.agent.Trace;
 import com.newrelic.api.agent.weaver.MatchType;
@@ -24,6 +26,8 @@ public abstract class IpmEventDirector {
 		PmProcess process = target.getProcess(context);
 
 		String processName = process.getName(context);
+		Exception e = new Exception("call to IpmEventDirector.handleEvent");
+		NewRelic.getAgent().getLogger().log(Level.FINE, e, "call to {0}.handleEvent, process: {1}, name: {2}",getClass().getName(),processName,name);
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom",getClass().getSimpleName(),"handleEvent",processName,name});
 		return Weaver.callOriginal();
 	}
