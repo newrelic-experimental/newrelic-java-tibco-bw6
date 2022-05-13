@@ -54,20 +54,17 @@ public class TibcoUtils {
 		{
 			Enumeration<?> parameterEnum = msg.getPropertyNames();
 			if ((parameterEnum == null) || (!parameterEnum.hasMoreElements())) {
-				NewRelic.getAgent().getLogger().log(Level.FINE, "No message parameters found");
 				return Collections.emptyMap();
 			}
 
 			while (parameterEnum.hasMoreElements()) {
 				String key = (String)parameterEnum.nextElement();
-				NewRelic.getAgent().getLogger().log(Level.FINE, "message key: ",key);
 				Object val = msg.getObjectProperty(key);
-				NewRelic.getAgent().getLogger().log(Level.FINE, "message parameter: ",key," = ",val == null ? null : val.toString());
 
 				result.put(key, val == null ? null : val.toString());
 			}
 		} catch (JMSException e) {
-			NewRelic.getAgent().getLogger().log(Level.FINE, e, "Unable to capture JMS message property", new Object[0]);
+			NewRelic.getAgent().getLogger().log(Level.FINEST, e, "Unable to capture JMS message property", new Object[0]);
 		}
 
 		return result;
@@ -94,12 +91,12 @@ public class TibcoUtils {
 			}
 			else
 			{
-				NewRelic.getAgent().getLogger().log(Level.FINE, "Error naming JMS transaction: Invalid Message Type.", new Object[0]);
+				NewRelic.getAgent().getLogger().log(Level.FINEST, "Error naming JMS transaction: Invalid Message Type.", new Object[0]);
 				NewRelic.getAgent().getTransaction().setTransactionName(TransactionNamePriority.FRAMEWORK_HIGH, false, "Message", new String[] { "JMS", "Unknown Destination" });
 				
 			}
 		} catch (JMSException e) {
-			NewRelic.getAgent().getLogger().log(Level.FINE, e, "Error naming JMS transaction", new Object[0]);
+			NewRelic.getAgent().getLogger().log(Level.FINEST, e, "Error naming JMS transaction", new Object[0]);
 		}
 
 	}
@@ -125,10 +122,10 @@ public class TibcoUtils {
 			}
 			else
 			{
-				NewRelic.getAgent().getLogger().log(Level.FINE, "Error naming JMS transaction: Invalid Message Type.", new Object[0]);
+				NewRelic.getAgent().getLogger().log(Level.FINEST, "Error naming JMS transaction: Invalid Message Type.", new Object[0]);
 			}
 		} catch (JMSException e) {
-			NewRelic.getAgent().getLogger().log(Level.FINE, e, "Error naming JMS transaction", new Object[0]);
+			NewRelic.getAgent().getLogger().log(Level.FINEST, e, "Error naming JMS transaction", new Object[0]);
 		}
 
 	}
@@ -209,7 +206,7 @@ public class TibcoUtils {
 				destName = ((Topic)dest).getTopicName();
 			}
 		} catch (JMSException e) {
-			NewRelic.getAgent().getLogger().log(Level.FINE, e, "Unable to get the JMS message destination name. ({0})", new Object[]{dest});
+			NewRelic.getAgent().getLogger().log(Level.FINEST, e, "Unable to get the JMS message destination name. ({0})", new Object[]{dest});
 		}
 		return destName;
 	}

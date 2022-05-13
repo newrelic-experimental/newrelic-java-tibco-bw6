@@ -4,20 +4,16 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 import com.newrelic.api.agent.NewRelic;
-import com.newrelic.api.agent.Token;
 import com.newrelic.api.agent.Trace;
+import com.newrelic.api.agent.TracedMethod;
 import com.newrelic.api.agent.weaver.MatchType;
-import com.newrelic.api.agent.weaver.NewField;
 import com.newrelic.api.agent.weaver.Weave;
 import com.newrelic.api.agent.weaver.Weaver;
 
 @Weave(type=MatchType.BaseClass)
 public abstract class AsyncActivity<N> {
 	
-	@NewField
-	protected Token token;
-
-	@Trace(dispatcher=true)
+	@Trace
 	public void execute(N paramN, ProcessContext<N> processCtx, AsyncActivityController asyncActivityController) throws ActivityFault {
 		HashMap<String, Object> attributes = new HashMap<>();
 		String processName = processCtx.getProcessName();
@@ -32,25 +28,31 @@ public abstract class AsyncActivity<N> {
 		if(processId != null) attributes.put("ProcessExecutionID", processId);
 		NewRelic.getAgent().getTracedMethod().addCustomAttributes(attributes);
 		
-		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom/AsyncActivity/",appName,processName,getClass().getSimpleName(),"execute"});
+		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom/AsyncActivity",processName,getClass().getSimpleName(),"execute"});
 		Weaver.callOriginal();
 	}
 
-	@Trace(dispatcher=true)
+	@Trace
 	public N postExecute(Serializable paramSerializable, ProcessContext<N> processCtx) throws ActivityFault {
+		TracedMethod traced = NewRelic.getAgent().getTracedMethod();
 		String processName = processCtx.getProcessName();
+		traced.addCustomAttribute("ProcessName", processName);;
 		String appName = processCtx.getApplicationName();
-		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom/AsyncActivity/",appName,processName,"postExecute"});
+		traced.addCustomAttribute("AppName", appName);
+		traced.setMetricName(new String[] {"Custom/AsyncActivity/",processName,"postExecute"});
 		
 		
 		return Weaver.callOriginal();
 	}
 
-	@Trace(dispatcher=true)
+	@Trace
 	public void cancel(ProcessContext<N> processCtx) {
+		TracedMethod traced = NewRelic.getAgent().getTracedMethod();
 		String processName = processCtx.getProcessName();
+		traced.addCustomAttribute("ProcessName", processName);;
 		String appName = processCtx.getApplicationName();
-		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom/AsyncActivity/",appName,processName,"cancel"});
+		traced.addCustomAttribute("AppName", appName);
+		traced.setMetricName(new String[] {"Custom/AsyncActivity/",processName,"cancel"});
 		
 		Weaver.callOriginal();
 	}

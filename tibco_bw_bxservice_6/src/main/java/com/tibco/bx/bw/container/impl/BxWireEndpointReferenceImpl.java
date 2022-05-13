@@ -9,7 +9,7 @@ import com.tibco.bx.api.services.BxResponseListener;
 @Weave
 public abstract class BxWireEndpointReferenceImpl {
 
-	@Trace(dispatcher=true)
+	@Trace
 	public <T> void send(T[] msg, BxResponseListener listener, BxInvocationInfo invokeInfo) throws Exception {
 		Weaver.callOriginal();
 	}

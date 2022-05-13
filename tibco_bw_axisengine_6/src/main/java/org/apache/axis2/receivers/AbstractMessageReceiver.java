@@ -1,12 +1,9 @@
 package org.apache.axis2.receivers;
 
-import java.util.logging.Level;
-
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.MessageContext;
 import org.apache.axis2.description.AxisMessage;
 
-import com.newrelic.api.agent.Logger;
 import com.newrelic.api.agent.NewRelic;
 import com.newrelic.api.agent.Trace;
 import com.newrelic.api.agent.TracedMethod;
@@ -20,9 +17,6 @@ public abstract class AbstractMessageReceiver {
 	@Trace(dispatcher=true)
 	public void receive(MessageContext msgCtx) throws AxisFault {
 		AxisMessage axisMsg = msgCtx.getAxisMessage();
-		Logger logger = NewRelic.getAgent().getLogger();
-		
-		logger.log(Level.FINE, "AbstractMessageReceiver - receive: {0}", new Object[] {getClass().getCanonicalName()});
 		String axisName = axisMsg.getName();
 		String axisOpName = axisMsg.getAxisOperation().getName().getLocalPart();
 		

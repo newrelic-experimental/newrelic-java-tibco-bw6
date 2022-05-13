@@ -16,7 +16,7 @@ public abstract class BxReferenceEndpointImpl {
 
 	public abstract String getEndpointName();
 	
-	@Trace(dispatcher=true)
+	@Trace
 	public <N> void invoke(MessageContext messageContext, N[] message) {
 		String operation = "Unknown";
 		RequestContext requestCtx = messageContext.getRequestContext();

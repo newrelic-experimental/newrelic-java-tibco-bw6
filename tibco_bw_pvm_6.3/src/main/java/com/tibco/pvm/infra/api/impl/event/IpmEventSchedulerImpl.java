@@ -8,6 +8,7 @@ import com.tibco.pvm.api.PmProcessInstance;
 import com.tibco.pvm.api.PmWorkUnit;
 import com.tibco.pvm.api.event.PmModelEvent;
 import com.tibco.pvm.api.session.PmContext;
+import com.tibco.pvm.im.rt.xm.ImxInstProcess;
 import com.tibco.pvm.infra.api.event.IpmLifeCycleEvent;
 
 @Weave
@@ -15,9 +16,11 @@ public abstract class IpmEventSchedulerImpl {
 
 	@Trace(dispatcher=true)
 	public void scheduleLifeCycleEvent(PmContext context, PmProcessInstance process, IpmLifeCycleEvent event) {
-		String name = process.getName(context);
-		if(name != null && !name.isEmpty()) {
-			NewRelic.getAgent().getTracedMethod().setMetricName("Custom","IpmEventSchedulerImpl","scheduleLifeCycleEvent",name);
+		if(process instanceof ImxInstProcess) {
+			ImxInstProcess iProcess = (ImxInstProcess)process;
+			if(iProcess.headers != null) {
+				NewRelic.getAgent().getTransaction().insertDistributedTraceHeaders(iProcess.headers);
+			}
 		}
 		Weaver.callOriginal();
 	}

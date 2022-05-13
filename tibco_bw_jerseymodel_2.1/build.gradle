@@ -1,0 +1,31 @@
+
+// Build.gradle generated for instrumentation module tibco_bw_jerseymodel_6
+
+apply plugin: 'java'
+
+dependencies {
+//   implementation 'org.glassfish.hk2.external:asm-all-repackaged:2.2.0'
+   implementation 'org.glassfish.jersey.core:jersey-server:2.7'
+   implementation 'org.glassfish.jersey.core:jersey-common:2.7'
+   implementation 'org.glassfish.jersey.containers:jersey-container-servlet-core:2.7'
+   implementation 'javax.ws.rs:javax.ws.rs-api:2.0'
+   implementation fileTree(include: ['*.jar'], dir: 'lib')
+
+   // New Relic Java Agent dependencies
+   implementation 'com.newrelic.agent.java:newrelic-agent:6.0.0'
+   implementation 'com.newrelic.agent.java:newrelic-api:6.0.0'
+   implementation fileTree(include: ['*.jar'], dir: '../libs')
+}
+
+jar {
+  manifest {
+    attributes 'Implementation-Title': 'com.newrelic.instrumentation.tibco_bw_jerseymodel_2.1'
+    attributes 'Implementation-Vendor': 'New Relic'
+    attributes 'Implementation-Vendor-Id': 'com.newrelic'
+    attributes 'Implementation-Version': 1.0
+  }
+}
+
+verifyInstrumentation {
+   passes 'org.glassfish.jersey.core:jersey-server:[2.1,2.8)'
+}
