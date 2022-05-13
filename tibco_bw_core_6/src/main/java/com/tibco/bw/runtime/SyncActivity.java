@@ -2,7 +2,7 @@ package com.tibco.bw.runtime;
 
 import com.newrelic.api.agent.NewRelic;
 import com.newrelic.api.agent.Trace;
-import com.newrelic.api.agent.TransactionNamePriority;
+import com.newrelic.api.agent.TracedMethod;
 import com.newrelic.api.agent.weaver.MatchType;
 import com.newrelic.api.agent.weaver.Weave;
 import com.newrelic.api.agent.weaver.Weaver;
@@ -16,8 +16,10 @@ public abstract class SyncActivity<N> {
 		String appName = processCtx.getApplicationName();
 		String classname = getClass().getSimpleName();
 		String metricName = "Custom/SyncActivity/" + classname;
-		NewRelic.getAgent().getTracedMethod().setMetricName(metricName);
-		NewRelic.getAgent().getTransaction().setTransactionName(TransactionNamePriority.FRAMEWORK_HIGH, true, "Work", new String[]{appName,processName});
+		TracedMethod traced = NewRelic.getAgent().getTracedMethod();
+		traced.addCustomAttribute("ProcessName", processName);
+		traced.addCustomAttribute("AppName", appName);
+		traced.setMetricName(metricName);
 		
 		return Weaver.callOriginal();
 	}

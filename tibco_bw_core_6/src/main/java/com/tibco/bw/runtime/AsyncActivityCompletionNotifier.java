@@ -1,9 +1,7 @@
 package com.tibco.bw.runtime;
 
 import java.io.Serializable;
-import java.util.logging.Level;
 
-import com.newrelic.api.agent.NewRelic;
 import com.newrelic.api.agent.Token;
 import com.newrelic.api.agent.weaver.MatchType;
 import com.newrelic.api.agent.weaver.NewField;
@@ -20,9 +18,6 @@ public abstract class AsyncActivityCompletionNotifier {
 		if(token !=  null) {
 			token.linkAndExpire();
 			token = null;
-			NewRelic.getAgent().getLogger().log(Level.FINE, "Linked Token in AsyncActivityCompletionNotifier", new Object[0]);
-		} else {
-			NewRelic.getAgent().getLogger().log(Level.FINE, "No Token to link in AsyncActivityCompletionNotifier", new Object[0]);
 		}
 		Weaver.callOriginal();
 	}

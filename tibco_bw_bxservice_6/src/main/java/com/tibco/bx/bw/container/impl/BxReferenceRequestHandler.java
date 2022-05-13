@@ -14,7 +14,7 @@ public abstract class BxReferenceRequestHandler {
 
 	private ReferenceEndpoint endpoint = Weaver.callOriginal();
 	
-	@Trace(dispatcher=true)
+	@Trace
 	public <T> void send(T[] msg, BxResponseListener listener, BxInvocationInfo invokeInfo) {
 		String operation = invokeInfo.getOperationName();
 		

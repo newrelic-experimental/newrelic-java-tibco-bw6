@@ -16,7 +16,7 @@ public abstract class BxServiceEndpointImpl {
 	
 	public abstract String getEndpointName();
 	
-	@Trace(dispatcher=true)
+	@Trace
 	public <N> void invoke(MessageContext messageContext, N[] requestMessage) {
 		String operation = "Unknown";
 		RequestContext requestCtx = messageContext.getRequestContext();
@@ -31,4 +31,5 @@ public abstract class BxServiceEndpointImpl {
 		
 		Weaver.callOriginal();
 	}
+	
 }

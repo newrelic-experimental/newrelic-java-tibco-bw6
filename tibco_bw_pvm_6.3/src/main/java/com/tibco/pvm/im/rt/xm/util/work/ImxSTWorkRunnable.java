@@ -6,24 +6,20 @@ import com.newrelic.api.agent.weaver.Weaver;
 import com.tibco.pvm.api.session.PmContext;
 import com.tibco.pvm.infra.services.engine.impl.STWorkRunnable;
 import com.tibco.pvm.infra.support.work.Work;
-import com.tibco.pvm.infra.support.work.impl.BaseProcessWork;
 
 @Weave
 public abstract class ImxSTWorkRunnable extends STWorkRunnable  {
 
-	
+
 	public ImxSTWorkRunnable(PmContext context, Work work, int priority, int engineStepCount) {
 		super(context, work, priority);
 	}
 
 	@Trace(async=true)
 	public boolean doWorkBlock() {
-		if(m_work instanceof BaseProcessWork) {
-			BaseProcessWork pWork = (BaseProcessWork)m_work;
-			if(pWork.token != null) {
-				pWork.token.linkAndExpire();
-				pWork.token = null;
-			}
+		if(m_work.token != null) {
+			m_work.token.linkAndExpire();
+			m_work.token = null;
 		}
 		boolean b = Weaver.callOriginal();
 		return b;

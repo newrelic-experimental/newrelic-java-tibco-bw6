@@ -21,12 +21,9 @@ public abstract class BxServiceAgent {
 
 	  public abstract BxModule getModule();
 
-	@Trace(dispatcher=true)
+	@Trace
 	  public <T> PmProcessInstance onDispatch(String paramString1, String paramString2, QName paramQName, T[] paramArrayOfT, BxReplyEndpointReference paramBxReplyEndpointReference, BxInvocationInfo paramBxInvocationInfo) {
-//		if(paramBxReplyEndpointReference.token == null) {
-//			paramBxReplyEndpointReference.token = NewRelic.getAgent().getTransaction().getToken();
-//		}
-
+		NewRelic.getAgent().getTransaction().insertDistributedTraceHeaders(paramBxInvocationInfo.headers);
 		return Weaver.callOriginal();
 	}
 

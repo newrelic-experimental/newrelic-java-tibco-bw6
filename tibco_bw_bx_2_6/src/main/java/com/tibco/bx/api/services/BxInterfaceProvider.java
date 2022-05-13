@@ -6,11 +6,9 @@ import javax.xml.namespace.QName;
 
 import com.newrelic.api.agent.NewRelic;
 import com.newrelic.api.agent.Trace;
-import com.newrelic.api.agent.TransactionNamePriority;
 import com.newrelic.api.agent.weaver.MatchType;
 import com.newrelic.api.agent.weaver.Weave;
 import com.newrelic.api.agent.weaver.Weaver;
-import com.nr.instrumentation.bx.OutboundWrapper;
 
 @Weave(type=MatchType.Interface)
 public abstract class BxInterfaceProvider {
@@ -25,12 +23,8 @@ public abstract class BxInterfaceProvider {
 
 	@Trace
 	public <T> void invoke(T[] paramArrayOfT, BxReplyEndpointReference replyEndpointReference, BxInvocationInfo invocationInfo) {
-//		if(replyEndpointReference.token == null) {
-//			replyEndpointReference.token = NewRelic.getAgent().getTransaction().getToken();
-//		}
-		NewRelic.getAgent().getTracedMethod().addOutboundRequestHeaders(new OutboundWrapper(invocationInfo));
+		NewRelic.getAgent().getTransaction().insertDistributedTraceHeaders(invocationInfo.headers);
 		Weaver.callOriginal();
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom/BXInterfaceProvider",getServiceName(),invocationInfo.getOperationName()});
-		NewRelic.getAgent().getTransaction().setTransactionName(TransactionNamePriority.CUSTOM_HIGH, true, "AxisService", new String[] {getServiceName(),invocationInfo.getOperationName()});
 	}
 }

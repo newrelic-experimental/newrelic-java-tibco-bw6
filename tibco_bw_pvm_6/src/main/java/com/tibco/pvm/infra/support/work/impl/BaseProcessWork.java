@@ -1,7 +1,5 @@
 package com.tibco.pvm.infra.support.work.impl;
 
-import java.util.logging.Level;
-
 import com.newrelic.api.agent.NewRelic;
 import com.newrelic.api.agent.Token;
 import com.newrelic.api.agent.Trace;
@@ -41,7 +39,6 @@ public abstract class BaseProcessWork {
 	public boolean continueProcessing(PmContext context) {
 		if(m_masterProcess != null && processName == null) {
 			processName = m_masterProcess.getName(context);
-			NewRelic.getAgent().getLogger().log(Level.FINE, "Set BaseProcessWork.processname = {0}", processName);
 		}
 		boolean b = Weaver.callOriginal();
 		return b;
@@ -51,7 +48,6 @@ public abstract class BaseProcessWork {
 	protected void doneProcessingWork(PmContext context, short lcStatus) {
 		if(m_masterProcess != null && processName == null) {
 			processName = m_masterProcess.getName(context);
-			NewRelic.getAgent().getLogger().log(Level.FINE, "Set BaseProcessWork.processname = {0}", processName);
 		}
 		if(processName != null) {
 			NewRelic.getAgent().getTracedMethod().setMetricName("Custom","ProcessWork","doneProcessingWork",processName);

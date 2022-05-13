@@ -7,6 +7,7 @@ import javax.xml.namespace.QName;
 
 import com.newrelic.api.agent.NewRelic;
 import com.newrelic.api.agent.Trace;
+import com.newrelic.api.agent.TransportType;
 import com.newrelic.api.agent.weaver.MatchType;
 import com.newrelic.api.agent.weaver.Weave;
 import com.newrelic.api.agent.weaver.Weaver;
@@ -23,18 +24,14 @@ public abstract class BxDispatcherImpl {
 
 	@Trace(dispatcher=true)
 	public <T> PmProcessInstance onDispatch(String fullServiceName, String operationName, QName messageName, T[] _message, BxReplyEndpointReference replyHandler, BxInvocationInfo invokeInfo) {
-//		if(replyHandler.token == null) {
-//			replyHandler.token = NewRelic.getAgent().getTransaction().getToken();
-//		}
+		NewRelic.getAgent().getTransaction().acceptDistributedTraceHeaders(TransportType.Other, invokeInfo.headers);
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom","BxDispatcherImpl",fullServiceName,operationName});
 		return Weaver.callOriginal();
 	}
 
 	@Trace(dispatcher=true)
 	protected PmProcessInstance startJob(long serviceId, PmTask receive, BxEvalCorrelationSets evalCorrelations, PmProcessDefinition definition, PmContext context, PmxWSDLMessage message, BxReplyEndpointReference endpointReference, BxInvocationInfo invokeInfo, boolean doImmediateReply) throws Exception {
-//		if(endpointReference.token == null) {
-//			endpointReference.token = NewRelic.getAgent().getTransaction().getToken();
-//		}
+		NewRelic.getAgent().getTransaction().acceptDistributedTraceHeaders(TransportType.Other, invokeInfo.headers);
 		List<String> nameList = new ArrayList<String>();
 		nameList.add("Custom");
 		nameList.add("BxDispatcherImpl");

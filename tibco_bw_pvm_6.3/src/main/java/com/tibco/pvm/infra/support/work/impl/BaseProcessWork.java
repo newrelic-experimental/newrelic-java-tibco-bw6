@@ -22,6 +22,14 @@ public abstract class BaseProcessWork implements ProcessWork {
 	protected PmProcessInstance m_masterProcess = Weaver.callOriginal();
 
 	public abstract WorkItem getWorkItem();
+	
+	protected BaseProcessWork() {
+	}
+
+	protected BaseProcessWork(PmProcessInstance masterProcess) {
+
+	}
+
 
 	protected void doneProcessingWork(PmContext context, short lcStatus) {
 		if(m_masterProcess != null && processName == null) {
