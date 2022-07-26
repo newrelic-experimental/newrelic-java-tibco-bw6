@@ -28,4 +28,6 @@ jar {
 
 verifyInstrumentation {
    passes 'org.glassfish.jersey.core:jersey-server:[2.8,3.0.0)'
+   excludeRegex '.*M[0-9]'
+   excludeRegex '.*RC[0-9]'
 }
